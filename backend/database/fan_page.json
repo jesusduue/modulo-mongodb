@@ -1,0 +1,203 @@
+[
+  {
+    "nom_fan_pag": "Gourmet World",
+    "des_fan_pag": "Explorando los sabores del mundo.",
+    "per_fan_pag": "gourmet.jpg",
+    "fec_fan_pag": {
+      "$date": "2023-02-20T00:00:00Z"
+    },
+    "est_fan_pag": "A",
+    "categoria": [
+      {
+        "_id": 2,
+        "nom_cat": "Comida y Bebida",
+        "des_cat": "Páginas dedicadas a la gastronomía.",
+        "est_cat": "a"
+      }
+    ],
+    "publicacion": [
+      {
+        "_id": 2,
+        "tit_pub": "Receta de la semana: Pasta Carbonara",
+        "des_pub": "Aprende a preparar una auténtica pasta carbonara italiana en casa.",
+        "fec_pub": {
+          "$date": "2023-03-10T00:00:00Z"
+        },
+        "est_pub": "A",
+        "multimedia": [
+          {
+            "_id": 3,
+            "tip_mul": "imagen",
+            "url_mul": "https://example.com/carbonara.jpg"
+          }
+        ]
+      },
+      {
+        "_id": 3,
+        "tit_pub": "Top 5 restaurantes en Roma",
+        "des_pub": "Nuestra selección de los mejores lugares para comer en la capital italiana.",
+        "fec_pub": {
+          "$date": "2023-04-05T00:00:00Z"
+        },
+        "est_pub": "A",
+        "multimedia": [
+          {
+            "_id": 4,
+            "tip_mul": "video",
+            "url_mul": "https://example.com/restaurantes_roma.mp4"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "nom_fan_pag": "TravelVibes",
+    "des_fan_pag": "Inspiración para tu próxima aventura.",
+    "per_fan_pag": "travel.png",
+    "fec_fan_pag": {
+      "$date": "2022-11-05T00:00:00Z"
+    },
+    "est_fan_pag": "A",
+    "categoria": [
+      {
+        "_id": 3,
+        "nom_cat": "Viajes y Turismo",
+        "des_cat": "Blogs y agencias de viajes.",
+        "est_cat": "a"
+      }
+    ],
+    "publicacion": [
+      {
+        "_id": 4,
+        "tit_pub": "Descubriendo las playas de Tailandia",
+        "des_pub": "Un viaje por las islas más paradisíacas del sudeste asiático.",
+        "fec_pub": {
+          "$date": "2023-01-25T00:00:00Z"
+        },
+        "est_pub": "A",
+        "multimedia": [
+          {
+            "_id": 5,
+            "tip_mul": "imagen",
+            "url_mul": "https://example.com/playa_tailandia.jpg"
+          },
+          {
+            "_id": 6,
+            "tip_mul": "imagen",
+            "url_mul": "https://example.com/isla_phi_phi.jpg"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "nom_fan_pag": "FitLife Club",
+    "des_fan_pag": "Tu comunidad de fitness y vida saludable.",
+    "per_fan_pag": "fitness.jpg",
+    "fec_fan_pag": {
+      "$date": "2023-05-18T00:00:00Z"
+    },
+    "est_fan_pag": "A",
+    "categoria": [
+      {
+        "_id": 4,
+        "nom_cat": "Deporte y Fitness",
+        "des_cat": "Gimnasios, entrenadores y vida saludable.",
+        "est_cat": "a"
+      }
+    ],
+    "publicacion": [
+      {
+        "_id": 5,
+        "tit_pub": "Rutina de cardio en casa",
+        "des_pub": "Quema calorías sin necesidad de equipo con esta rutina de 30 minutos.",
+        "fec_pub": {
+          "$date": "2023-06-01T00:00:00Z"
+        },
+        "est_pub": "A",
+        "multimedia": [
+          {
+            "_id": 7,
+            "tip_mul": "video",
+            "url_mul": "https://example.com/rutina_cardio.mp4"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "nom_fan_pag": "Cinephile Corner",
+    "des_fan_pag": "Reseñas, noticias y todo sobre el séptimo arte.",
+    "per_fan_pag": "cinema.gif",
+    "fec_fan_pag": {
+      "$date": "2021-08-30T00:00:00Z"
+    },
+    "est_fan_pag": "I",
+    "categoria": [
+      {
+        "_id": 5,
+        "nom_cat": "Cine y Series",
+        "des_cat": "Crítica y noticias de la industria cinematográfica.",
+        "est_cat": "a"
+      }
+    ],
+    "publicacion": [
+      {
+        "_id": 6,
+        "tit_pub": "Análisis de 'Dune: Part Two'",
+        "des_pub": "Nuestra opinión sobre la esperada secuela de ciencia ficción.",
+        "fec_pub": {
+          "$date": "2024-03-15T00:00:00Z"
+        },
+        "est_pub": "A",
+        "multimedia": [
+          {
+            "_id": 8,
+            "tip_mul": "imagen",
+            "url_mul": "https://example.com/dune_poster.jpg"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "nom_fan_pag": "EcoWarriors",
+    "des_fan_pag": "Pequeñas acciones, gran impacto. Por un planeta más verde.",
+    "per_fan_pag": "eco.jpg",
+    "fec_fan_pag": {
+      "$date": "2023-04-22T00:00:00Z"
+    },
+    "est_fan_pag": "A",
+    "categoria": [
+      {
+        "_id": 6,
+        "nom_cat": "Ecología y Medio Ambiente",
+        "des_cat": "Organizaciones y activismo por el medio ambiente.",
+        "est_cat": "a"
+      }
+    ],
+    "publicacion": [
+      {
+        "_id": 7,
+        "tit_pub": "Día de limpieza de playas",
+        "des_pub": "Únete a nuestra jornada de voluntariado este fin de semana.",
+        "fec_pub": {
+          "$date": "2023-07-01T00:00:00Z"
+        },
+        "est_pub": "A",
+        "multimedia": [
+          {
+            "_id": 9,
+            "tip_mul": "imagen",
+            "url_mul": "https://example.com/limpieza_playa.jpg"
+          },
+          {
+            "_id": 10,
+            "tip_mul": "video",
+            "url_mul": "https://example.com/evento_playa.mp4"
+          }
+        ]
+      }
+    ]
+  }
+]
