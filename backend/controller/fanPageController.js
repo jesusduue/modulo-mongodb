@@ -1,160 +1,120 @@
+const FanPage = require('../models/fanPageModel');
 
-const fan_page = require('../models/fanPageModel');
-
-// Obtener todas las fan pages
-exports.getAllFanPages = async (req, res) => {
-    try {
-        const fanPages = await fan_page.find();
-        res.json(fanPages);
-        console.log('Fan pages obtenidas:', fanPages);
-    } catch (error) {
-        console.error('Error al obtener las fan pages:', error);
-        res.status(500).json({ error: 'Error al obtener las fan pages' });
-    }
+// @desc    Obtener todas las páginas de fans
+// @route   GET /api/fanpage
+// @access  Public
+const getAllFanPages = async (req, res) => {
+  try {
+    const fanPages = await FanPage.find({});
+    res.status(200).json(fanPages);
+  } catch (error) {
+    console.error('Error al obtener las páginas:', error);
+    res.status(500).json({ message: 'Error en el servidor al obtener las páginas.' });
+  }
 };
 
-// Obtener una fan page por id
-exports.getFanPageById = async (req, res) => {
-    try {
-        console.log('ID recibido:', req.params.id);
-        const fanPage = await fan_page.findOne({ _id: req.params.id });
-        console.log('Fan page encontrada:', fanPage);
-        if (fanPage == null) {
-            return res.status(404).json({ error: 'Fan page no encontrada' });
-        }
-        res.json(fanPage);
-    } catch (error) {
-        console.error('Error al obtener la fan page:', error);
-        res.status(500).json({ error: 'Error al obtener la fan page' });
-    }
-};
+// @desc    Crear una nueva página de fan
+// @route   POST /api/fanpage
+// @access  Public
+const createFanPage = async (req, res) => {
+  try {
+    // Se desestructuran los campos del body con los nombres correctos del Schema
+    const { nom_fan_pag, des_fan_pag, per_fan_pag, est_fan_pag } = req.body;
 
-// Crear una nueva fan page
-exports.createFanPage = async (req, res) => {
-    const fanPage = new fan_page({
-        nom_fan_pag: req.body.nom_fan_pag,
-        des_fan_pag: req.body.des_fan_pag,
-        per_fan_pag: req.body.per_fan_pag,
-        fec_fan_pag: req.body.fec_fan_pag,
-        est_fan_pag: req.body.est_fan_pag,
-        categoria: req.body.categoria || [],
-        publicacion: req.body.publicacion || []
+    // Validación básica para campos obligatorios
+    if (!nom_fan_pag || !des_fan_pag) {
+      return res
+        .status(400)
+        .json({ message: 'Los campos nom_fan_pag y des_fan_pag son obligatorios.' });
+    }
+
+    // Se crea la nueva instancia del modelo
+    const newFanPage = new FanPage({
+      nom_fan_pag,
+      des_fan_pag,
+      per_fan_pag,
+      est_fan_pag,
     });
-    try {
-        const newFanPage = await fanPage.save();
-        res.status(201).json(newFanPage);
-    } catch (error) {
-        console.error('Error al crear la fan page:', error);
-        res.status(500).json({ error: 'Error al crear la fan page' });
-    }
+
+    // Se guarda en la base de datos
+    const createdFanPage = await newFanPage.save();
+    res.status(201).json(createdFanPage);
+  } catch (error) {
+    console.error('Error al crear la página:', error);
+    res.status(500).json({ message: 'Error en el servidor al crear la página.' });
+  }
 };
 
-// Actualizar una fan page
-exports.updateFanPage = async (req, res) => {
-    try {
-        const fanPage = await fan_page.findById(req.params.id);
-        if (fanPage == null) {
-            return res.status(404).json({ message: 'Fan page no encontrada' });
-        }
-        
-        if (req.body.nom_fan_pag != null) {
-            fanPage.nom_fan_pag = req.body.nom_fan_pag;
-        }
-        if (req.body.des_fan_pag != null) {
-            fanPage.des_fan_pag = req.body.des_fan_pag;
-        }
-        if (req.body.per_fan_pag != null) {
-            fanPage.per_fan_pag = req.body.per_fan_pag;
-        }
-        if (req.body.fec_fan_pag != null) {
-            fanPage.fec_fan_pag = req.body.fec_fan_pag;
-        }
-        if (req.body.est_fan_pag != null) {
-            fanPage.est_fan_pag = req.body.est_fan_pag;
-        }
-        if (req.body.categoria != null) {
-            fanPage.categoria = req.body.categoria;
-        }
-        if (req.body.publicacion != null) {
-            fanPage.publicacion = req.body.publicacion;
-        }
-        
-        const updatedFanPage = await fan_page.save();
-        res.json(updatedFanPage);
-    } catch (error) {
-        console.error('Error al actualizar la fan page:', error);
-        res.status(500).json({ error: 'Error al actualizar la fan page' });
+// @desc    Obtener una página de fan por su ID
+// @route   GET /api/fanpage/:id
+// @access  Public
+const getFanPageById = async (req, res) => {
+  try {
+    const fanPage = await FanPage.findById(req.params.id);
+
+    if (fanPage) {
+      res.status(200).json(fanPage);
+    } else {
+      // Si el ID es válido pero no se encuentra, devuelve 404
+      res.status(404).json({ message: 'Página no encontrada.' });
     }
+  } catch (error) {
+    console.error('Error al obtener la página por ID:', error);
+    res.status(500).json({ message: 'Error en el servidor al obtener la página.' });
+  }
 };
 
-// Eliminar una fan page
-exports.deleteFanPage = async (req, res) => {
-    try {
-        const deletedFanPage = await fan_page.findByIdAndDelete(req.params.id);
-        if (!deletedFanPage) {
-            return res.status(404).json({ error: 'Fan page no encontrada' });
-        }
-        res.json({ message: 'Fan page eliminada con éxito' });
-    } catch (error) {
-        console.error('Error al eliminar la fan page:', error);
-        res.status(500).json({ error: 'Error al eliminar la fan page' });
+// @desc    Actualizar una página de fan
+// @route   PUT /api/fanpage/:id
+// @access  Public
+const updateFanPage = async (req, res) => {
+  try {
+    const { nom_fan_pag, des_fan_pag, per_fan_pag, est_fan_pag } = req.body;
+    const fanPage = await FanPage.findById(req.params.id);
+
+    if (fanPage) {
+      // Se actualizan los campos del documento encontrado
+      fanPage.nom_fan_pag = nom_fan_pag || fanPage.nom_fan_pag;
+      fanPage.des_fan_pag = des_fan_pag || fanPage.des_fan_pag;
+      fanPage.per_fan_pag = per_fan_pag || fanPage.per_fan_pag;
+      fanPage.est_fan_pag = est_fan_pag || fanPage.est_fan_pag;
+
+      const updatedFanPage = await fanPage.save();
+      res.status(200).json(updatedFanPage);
+    } else {
+      res.status(404).json({ message: 'Página no encontrada.' });
     }
+  } catch (error) {
+    console.error('Error al actualizar la página:', error);
+    res.status(500).json({ message: 'Error en el servidor al actualizar la página.' });
+  }
 };
 
-// Controladores adicionales para las relaciones
+// @desc    Eliminar una página de fan
+// @route   DELETE /api/fanpage/:id
+// @access  Public
+const deleteFanPage = async (req, res) => {
+  try {
+    const fanPage = await FanPage.findById(req.params.id);
 
-// Agregar una categoría a una fan page
-exports.addCategoryToFanPage = async (req, res) => {
-    try {
-        const fanPage = await fan_page.findById(req.params.id);
-        if (fanPage == null) {
-            return res.status(404).json({ error: 'Fan page no encontrada' });
-        }
-        
-        fanPage.categoria.push(req.body);
-        const updatedFanPage = await fanPage.save();
-        res.json(updatedFanPage);
-    } catch (error) {
-        console.error('Error al agregar categoría:', error);
-        res.status(500).json({ error: 'Error al agregar categoría' });
+    if (fanPage) {
+      // El método correcto es `deleteOne()` sobre la instancia del documento
+      await fanPage.deleteOne();
+      res.status(200).json({ message: 'Página eliminada correctamente.' });
+    } else {
+      res.status(404).json({ message: 'Página no encontrada.' });
     }
+  } catch (error) {
+    console.error('Error al eliminar la página:', error);
+    res.status(500).json({ message: 'Error en el servidor al eliminar la página.' });
+  }
 };
 
-// Agregar una publicación a una fan page
-exports.addPublicationToFanPage = async (req, res) => {
-    try {
-        const fanPage = await fan_page.findById(req.params.id);
-        if (fanPage == null) {
-            return res.status(404).json({ error: 'Fan page no encontrada' });
-        }
-        
-        fanPage.publicacion.push(req.body);
-        const updatedFanPage = await fan_page.save();
-        res.json(updatedFanPage);
-    } catch (error) {
-        console.error('Error al agregar publicación:', error);
-        res.status(500).json({ error: 'Error al agregar publicación' });
-    }
+module.exports = {
+  getAllFanPages,
+  createFanPage,
+  getFanPageById,
+  updateFanPage,
+  deleteFanPage,
 };
 
-// Agregar multimedia a una publicación
-exports.addMultimediaToPublication = async (req, res) => {
-    try {
-        const fanPage = await fan_page.findById(req.params.fanPageId);
-        if (fanPage == null) {
-            return res.status(404).json({ error: 'Fan page no encontrada' });
-        }
-        
-        const publication = fanPage.publicacion.id(req.params.publicationId);
-        if (publication == null) {
-            return res.status(404).json({ error: 'Publicación no encontrada' });
-        }
-        
-        publication.multimedia.push(req.body);
-        const updatedFanPage = await fan_page.save();
-        res.json(updatedFanPage);
-    } catch (error) {
-        console.error('Error al agregar multimedia:', error);
-        res.status(500).json({ error: 'Error al agregar multimedia' });
-    }
-};

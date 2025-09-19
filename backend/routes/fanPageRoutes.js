@@ -1,18 +1,25 @@
 const express = require('express');
 const router = express.Router();
-// ...existing // ...existing code...
-const fanPageController = require('../controller/fanpageController.js');
-// ...existing code...
 
-router.get('/', fanPageController.getAllFanPages);
-router.get('/:_id', fanPageController.getFanPageById);
-router.post('/', fanPageController.createFanPage);
-router.put('/:_id', fanPageController.updateFanPage);
-router.delete('/:_id', fanPageController.deleteFanPage);
+// Importamos todas las funciones del controlador
+const {
+  getAllFanPages,
+  createFanPage,
+  getFanPageById,
+  updateFanPage,
+  deleteFanPage,
+} = require('../controller/fanPageController');
 
-// Rutas para relaciones
-router.post('/:_id/categorias', fanPageController.addCategoryToFanPage);
-router.post('/:_id/publicaciones', fanPageController.addPublicationToFanPage);
-router.post('/:_id/publicaciones/:publicationId/multimedia', fanPageController.addMultimediaToPublication);
+
+router.route('/').get(getAllFanPages);
+router.route('/').post(createFanPage);
+
+// Cuando llega una petición a /api/fanpage/ con un ID específico (ej: /api/fanpage/12345)
+// Usamos .route('/:id') para agrupar las operaciones GET, PUT y DELETE para un mismo ID.
+router
+  .route('/:id')
+  .get(getFanPageById)
+  .put(updateFanPage)
+  .delete(deleteFanPage);
 
 module.exports = router;

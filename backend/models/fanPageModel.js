@@ -1,40 +1,53 @@
 const mongoose = require('mongoose');
 
-const fan_pageSchema = new mongoose.Schema({
-    _id: {type: mongoose.Schema.Types.ObjectId, auto: true},
-    nom_fan_pag: {type: String, required: true},
-    des_fan_pag: {type: String, required: true},
-    per_fan_pag: {type: String, required: true},
-    fec_fan_pag: {type: Date, required: true},
-    est_fan_pag: {type: String, required: true},
-    categoria: [{
-        _id: {type: mongoose.Schema.Types.ObjectId, auto: true},
-        nom_cat: {type: String, required: true},
-        des_cat: {type: String, required: true},
-        est_cat: {type: String, required: true}
-    }],
-    publicacion: [{
-        _id: {type: mongoose.Schema.Types.ObjectId, auto: true},
-        tit_pub: {type: String, required: true},
-        des_pub: {type: String, required: true},
-        fec_pub: {type: Date, required: true},
-        est_pub: {type: String, required: true},
-        multimedia: [{
-            _id: {type: mongoose.Schema.Types.ObjectId, auto: true},
-            tip_mul: {type: String, required: true},
-            url_mul: {type: String, required: true}
-        }]
-    }]
-}, {
-    collection: 'fan_page'
-});
+const fanPageSchema = new mongoose.Schema(
+  {
+    nom_fan_pag: {
+      type: String,
+      required: [true, 'Por favor, introduce el nombre de la página.'],
+    },
+    des_fan_pag: {
+      type: String,
+      required: [true, 'Por favor, introduce la descripción.'],
+    },
+    per_fan_pag: {
+      type: String,
+      required: false,
+    },
+    fec_fan_pag: {
+      type: Date,
+      default: Date.now,
+    },
+    est_fan_pag: {
+      type: String,
+      required: true,
+      default: 'A',
+    },
+    categoria: {
+      type: Array,
+      required: false,
+    },
+    publicacion: {
+      type: Array,
+      required: false,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
 
-// Omitir el campo __v de la salida json y formatear fechas
-fan_pageSchema.set('toJSON', {
-    transform: (doc, ret, options) => {
-        delete ret.__v;
-        return ret;
-    }
-});
+// --- EXPLICACIÓN DE LA CORRECCIÓN CLAVE ---
+// El tercer argumento en mongoose.model() es el nombre EXACTO de la colección
+// en tu base de datos de MongoDB.
+//
+// Mongoose por defecto intenta adivinar el nombre. Si tu modelo se llama 'FanPage',
+// Mongoose buscará una colección llamada 'fanpages' (plural y minúsculas).
+//
+// Es muy probable que tu colección se llame 'fan_page' (tal como tu archivo .json).
+// Al especificar 'fan_page' aquí, le decimos a Mongoose que no adivine y que use
+// ese nombre exacto, solucionando el problema de no encontrar los datos.
+const FanPage = mongoose.model('FanPage', fanPageSchema, 'fan_page');
 
-module.exports = mongoose.model('fan_page', fan_pageSchema);
+module.exports = FanPage;
+
