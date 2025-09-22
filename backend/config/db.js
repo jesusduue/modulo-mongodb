@@ -16,7 +16,7 @@ const connectDB = async () => {
   } catch (error) {
     // Si hay un error, lo mostramos en la consola y terminamos el proceso del servidor.
     console.error(`Error: ${error.message}`);
-    process.exit(1); // El 1 indica que la salida fue por un error.
+    process.exit(1);
   }
 };
 

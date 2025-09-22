@@ -1,8 +1,6 @@
 const FanPage = require('../models/fanPageModel');
 
-// @desc    Obtener todas las páginas de fans
-// @route   GET /api/fanpage
-// @access  Public
+//  Obtener todas las páginas de fans
 const getAllFanPages = async (req, res) => {
   try {
     const fanPages = await FanPage.find({});
@@ -13,15 +11,13 @@ const getAllFanPages = async (req, res) => {
   }
 };
 
-// @desc    Crear una nueva página de fan
-// @route   POST /api/fanpage
-// @access  Public
+//Crear una nueva página de fan
+
 const createFanPage = async (req, res) => {
   try {
-    // Se desestructuran los campos del body con los nombres correctos del Schema
     const { nom_fan_pag, des_fan_pag, per_fan_pag, est_fan_pag } = req.body;
 
-    // Validación básica para campos obligatorios
+    // Validación  para campos obligatorios
     if (!nom_fan_pag || !des_fan_pag) {
       return res
         .status(400)
@@ -45,9 +41,7 @@ const createFanPage = async (req, res) => {
   }
 };
 
-// @desc    Obtener una página de fan por su ID
-// @route   GET /api/fanpage/:id
-// @access  Public
+//Obtener una página de fan por su ID
 const getFanPageById = async (req, res) => {
   try {
     const fanPage = await FanPage.findById(req.params.id);
@@ -64,9 +58,7 @@ const getFanPageById = async (req, res) => {
   }
 };
 
-// @desc    Actualizar una página de fan
-// @route   PUT /api/fanpage/:id
-// @access  Public
+//Actualizar una página de fan
 const updateFanPage = async (req, res) => {
   try {
     const {
@@ -82,13 +74,12 @@ const updateFanPage = async (req, res) => {
     const fanPage = await FanPage.findById(req.params.id);
 
     if (fanPage) {
-      // Se actualizan los campos del documento encontrado
+      // Se actualizan los campos del documento
       fanPage.nom_fan_pag = nom_fan_pag || fanPage.nom_fan_pag;
       fanPage.des_fan_pag = des_fan_pag || fanPage.des_fan_pag;
       fanPage.per_fan_pag = per_fan_pag || fanPage.per_fan_pag;
       fanPage.est_fan_pag = est_fan_pag || fanPage.est_fan_pag;
 
-      // Si viene fecha válida, actualízala
       if (typeof fec_fan_pag !== 'undefined') {
         fanPage.fec_fan_pag = fec_fan_pag ? new Date(fec_fan_pag) : fanPage.fec_fan_pag;
       }
@@ -112,15 +103,12 @@ const updateFanPage = async (req, res) => {
   }
 };
 
-// @desc    Eliminar una página de fan
-// @route   DELETE /api/fanpage/:id
-// @access  Public
+//Eliminar una página de fan
 const deleteFanPage = async (req, res) => {
   try {
     const fanPage = await FanPage.findById(req.params.id);
 
     if (fanPage) {
-      // El método correcto es `deleteOne()` sobre la instancia del documento
       await fanPage.deleteOne();
       res.status(200).json({ message: 'Página eliminada correctamente.' });
     } else {

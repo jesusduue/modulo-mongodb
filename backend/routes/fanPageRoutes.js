@@ -14,7 +14,6 @@ const {
 router.route('/').get(getAllFanPages);
 router.route('/').post(createFanPage);
 
-// Cuando llega una petición a /api/fanpage/ con un ID específico (ej: /api/fanpage/12345)
 // Usamos .route('/:id') para agrupar las operaciones GET, PUT y DELETE para un mismo ID.
 router
   .route('/:id')
