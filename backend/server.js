@@ -27,5 +27,5 @@ app.use('/api/fanpage', fanPageRoutes);
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-  console.log(`El servidor está corriendo en el puerto http://127.0.0.1:${PORT}`);
+  console.log(`El servidor está corriendo en el puerto http://127.0.0.1:${PORT}/api/fanpage`);
 });

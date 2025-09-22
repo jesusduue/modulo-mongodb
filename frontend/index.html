@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>Fan Pages • MongoDB CRUD</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Íconos Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- Estilos con tu paleta -->
+  <link href="./styles.css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg shadow-sm navbar-branding">
+  <div class="container">
+    <a class="navbar-brand fw-bold text-uppercase" href="#">
+      <span class="brand-dot"></span> Fan Pages
+    </a>
+    <div class="ms-auto d-flex gap-2">
+      <input id="txtBuscar" class="form-control form-control-sm" placeholder="Buscar...">
+      <button id="btnRecargar" class="btn btn-outline-light btn-sm">
+        <i class="bi bi-arrow-clockwise"></i> Recargar
+      </button>
+      <!-- BOTÓN AGREGAR -->
+      <button id="btnAbrirAgregar" class="btn btn-outline-light btn-sm " data-bs-toggle="modal" data-bs-target="#modalAgregar">
+        <i class="bi bi-plus-circle"></i> Agregar
+      </button>
+    </div>
+  </div>
+</nav>
+
+  <main class="container py-4">
+    <div class="card shadow-sm">
+      <div class="card-header">
+        <h5 class="mb-0">Listado de fan_page</h5>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table id="tablaFanPage" class="table align-middle">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Avatar</th>
+                <th>Fecha</th>
+                <th class="text-center">Estatus</th>
+                <th class="text-center"># Categorías</th>
+                <th class="text-center"># Publicaciones</th>
+                <th class="text-center">Acciones</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div id="emptyState" class="text-center text-muted py-4 d-none">
+          <i class="bi bi-inboxes display-6 d-block mb-2"></i>
+          No hay datos para mostrar.
+        </div>
+      </div>
+    </div>
+  </main>
+
+<!-- Modal Detalle -->
+<div class="modal fade" id="modalDetalle" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          Detalle Fan Page
+          <small class="text-muted d-block fs-6" id="detalleSubtitulo"></small>
+        </h5>
+        <div class="d-flex gap-2 me-2">
+          <button class="btn btn-sm btn-outline-light " id="btnDetalleRecargar">
+            <i class="bi bi-arrow-clockwise"></i> Recargar
+          </button>
+          <button class="btn btn-sm btn-outline-accent" id="btnDetalleGuardar">
+            <i class="bi bi-save"></i> Guardar cambios
+          </button>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Top info -->
+        <div id="detalleResumen" class="mb-3"></div>
+        <hr>
+
+        <!-- CATEGORÍAS -->
+        <div class="d-flex align-items-center justify-content-between">
+          <h6 class="mb-0">Categorías</h6>
+          <button class="btn btn-sm btn-accent" id="btnAddCategoria">
+            <i class="bi bi-plus-circle"></i> Agregar categoría
+          </button>
+        </div>
+        <div id="listaCategorias" class="mt-2"></div>
+
+        <hr class="my-4">
+
+        <!-- PUBLICACIONES -->
+        <div class="d-flex align-items-center justify-content-between">
+          <h6 class="mb-0">Publicaciones</h6>
+          <button class="btn btn-sm btn-accent" id="btnAddPublicacion">
+            <i class="bi bi-plus-circle"></i> Agregar publicación
+          </button>
+        </div>
+        <div id="listaPublicaciones" class="mt-2"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <!-- Modal Agregar -->
+  <div class="modal fade" id="modalAgregar" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <form id="formAgregar" class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Agregar Fan Page</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body row g-3">
+          <div class="col-12">
+            <label class="form-label" for="add_nom_fan_pag">Nombre</label>
+            <input class="form-control" id="add_nom_fan_pag" required />
+          </div>
+          <div class="col-12">
+            <label class="form-label" for="add_des_fan_pag">Descripción</label>
+            <textarea class="form-control" id="add_des_fan_pag" required></textarea>
+          </div>
+          <div class="col-12">
+            <label class="form-label" for="add_per_fan_pag">Avatar (archivo)</label>
+            <input class="form-control" id="add_per_fan_pag" required />
+          </div>
+          <div class="col-6">
+            <label class="form-label" for="add_fec_fan_pag">Fecha</label>
+            <input type="date" class="form-control" id="add_fec_fan_pag" required />
+          </div>
+          <div class="col-6">
+            <label class="form-label" for="add_est_fan_pag">Estatus</label>
+            <select class="form-select" id="add_est_fan_pag">
+              <option value="A">Activo</option>
+              <option value="I">Inactivo</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button class="btn btn-primary" type="submit">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Editar -->
+  <div class="modal fade" id="modalEditar" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <form id="formEditar" class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Editar Fan Page</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body row g-3">
+          <input type="hidden" id="edit_id" />
+          <div class="col-12">
+            <label class="form-label" for="edit_nom_fan_pag">Nombre</label>
+            <input class="form-control" id="edit_nom_fan_pag" required />
+          </div>
+          <div class="col-12">
+            <label class="form-label" for="edit_des_fan_pag">Descripción</label>
+            <textarea class="form-control" id="edit_des_fan_pag" required></textarea>
+          </div>
+          <div class="col-12">
+            <label class="form-label" for="edit_per_fan_pag">Avatar (archivo)</label>
+            <input class="form-control" id="edit_per_fan_pag" required />
+          </div>
+          <div class="col-6">
+            <label class="form-label" for="edit_fec_fan_pag">Fecha</label>
+            <input type="date" class="form-control" id="edit_fec_fan_pag" required />
+          </div>
+          <div class="col-6">
+            <label class="form-label" for="edit_est_fan_pag">Estatus</label>
+            <select class="form-select" id="edit_est_fan_pag">
+              <option value="A">Activo</option>
+              <option value="I">Inactivo</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button class="btn btn-primary" type="submit">Actualizar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="./alerts.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>

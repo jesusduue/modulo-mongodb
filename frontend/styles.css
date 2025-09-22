@@ -1,0 +1,108 @@
+/* ====== PALETA ====== */
+:root{
+  --brand-primary: #522a70;  /* morado principal */
+  --brand-accent:  #fbd050;  /* acento amarillo */
+  --brand-soft1:   #faeadd;  /* fondo suave */
+  --brand-soft2:   #f29cb7;  /* secundario suave */
+  --brand-dark:    #222023;  /* texto oscuro */
+  --brand-paper:   #faf8f3;  /* papel */
+}
+
+body{ background: var(--brand-paper); color: var(--brand-dark); }
+
+/* ====== NAV ====== */
+.navbar-branding{ background: var(--brand-primary); }
+.navbar-brand, .navbar-brand:visited{ color: #fff !important; }
+.brand-dot{ display:inline-block; width:10px; height:10px; border-radius:50%; background: var(--brand-accent); margin-right:8px; }
+
+/* ====== CARDS/TABLA ====== */
+.card{ border: none; }
+.card-header{ background: linear-gradient(180deg, #fff, var(--brand-paper)); border-bottom: 1px solid #eee; }
+.table thead th{ background: var(--brand-primary); color:#fff; border: none; }
+.table tbody tr:hover{ background: var(--brand-soft1); }
+
+/* ====== FORM ====== */
+.form-control:focus, .form-select:focus{
+  border-color: var(--brand-accent);
+  box-shadow: 0 0 0 .2rem rgba(251,208,80,.25);
+}
+
+/* ====== BADGES ====== */
+.badge-active{ background: var(--brand-soft2); }
+.badge-inactive{ background: var(--brand-soft1) }
+
+/* ====== BOTONES (paleta) ====== */
+.btn-accent{
+  background: var(--brand-accent) !important; color: #222 !important; border: none !important;
+  box-shadow: 0 2px 6px rgba(0,0,0,.07);
+}
+.btn-outline-accent{
+  --bs-btn-color: var(--brand-accent);
+  --bs-btn-border-color: var(--brand-accent);
+  --bs-btn-hover-bg: var(--brand-accent);
+  --bs-btn-hover-border-color: var(--brand-accent);
+  --bs-btn-hover-color: var(--brand-primary);
+}
+
+
+.btn-accent:hover{ filter: brightness(.95); }
+
+.btn-primary{
+  --bs-btn-bg: var(--brand-primary);
+  --bs-btn-border-color: var(--brand-primary);
+  --bs-btn-hover-bg: #43215c;
+  --bs-btn-hover-border-color: #43215c;
+  --bs-btn-active-bg: #3b1d50;
+  --bs-btn-active-border-color: #3b1d50;
+}
+
+.btn-warning{ /* la usamos como “editar” con tu acento */
+  --bs-btn-bg: var(--brand-accent);
+  --bs-btn-border-color: var(--brand-accent);
+  --bs-btn-color: #222;
+  --bs-btn-hover-bg: #e9c149;
+  --bs-btn-hover-border-color: #e9c149;
+}
+
+.btn-outline-primary{
+  --bs-btn-color: var(--brand-primary);
+  --bs-btn-border-color: var(--brand-primary);
+  --bs-btn-hover-bg: var(--brand-primary);
+  --bs-btn-hover-border-color: var(--brand-primary);
+  --bs-btn-hover-color: #fff;
+}
+
+/* ====== MODALES (paleta) ====== */
+.modal-content{
+  background: #fff;
+  border: 1px solid rgba(0,0,0,.08);
+  border-radius: 16px;
+}
+.modal-header{
+  background: var(--brand-primary);
+  color: #fff;
+  border-bottom: none;
+}
+.modal-title{ color:#fff; }
+.btn-close{
+  filter: invert(1) grayscale(100%); /* para que se vea sobre el header oscuro */
+  opacity: .85;
+}
+.modal-body{ background: var(--brand-paper); }
+.modal-footer{ background: #fff; border-top: 1px solid rgba(0,0,0,.05); }
+
+/* ====== TOOLTIP (opcional, más contraste) ====== */
+.tooltip-inner{ background: var(--brand-primary); }
+.tooltip.bs-tooltip-auto[data-popper-placement^=top] .tooltip-arrow::before,
+.tooltip.bs-tooltip-auto[data-popper-placement^=bottom] .tooltip-arrow::before,
+.tooltip.bs-tooltip-auto[data-popper-placement^=left] .tooltip-arrow::before,
+.tooltip.bs-tooltip-auto[data-popper-placement^=right] .tooltip-arrow::before{
+  border-top-color: var(--brand-primary) !important;
+  border-bottom-color: var(--brand-primary) !important;
+  border-left-color: var(--brand-primary) !important;
+  border-right-color: var(--brand-primary) !important;
+}
+
+/* ====== SPINNER (si se usara clase .text-brand) ====== */
+.text-brand{ color: var(--brand-primary) !important; }
+.text-muted{ color: var(--brand-soft1) !important; }

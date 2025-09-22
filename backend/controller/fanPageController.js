@@ -69,7 +69,16 @@ const getFanPageById = async (req, res) => {
 // @access  Public
 const updateFanPage = async (req, res) => {
   try {
-    const { nom_fan_pag, des_fan_pag, per_fan_pag, est_fan_pag } = req.body;
+    const {
+      nom_fan_pag,
+      des_fan_pag,
+      per_fan_pag,
+      est_fan_pag,
+      fec_fan_pag,
+      categoria,
+      publicacion
+    } = req.body;
+
     const fanPage = await FanPage.findById(req.params.id);
 
     if (fanPage) {
@@ -78,6 +87,19 @@ const updateFanPage = async (req, res) => {
       fanPage.des_fan_pag = des_fan_pag || fanPage.des_fan_pag;
       fanPage.per_fan_pag = per_fan_pag || fanPage.per_fan_pag;
       fanPage.est_fan_pag = est_fan_pag || fanPage.est_fan_pag;
+
+      // Si viene fecha válida, actualízala
+      if (typeof fec_fan_pag !== 'undefined') {
+        fanPage.fec_fan_pag = fec_fan_pag ? new Date(fec_fan_pag) : fanPage.fec_fan_pag;
+      }
+
+      // Si llegan arrays (aunque sean vacíos), se asignan
+      if (typeof categoria !== 'undefined') {
+        fanPage.categoria = Array.isArray(categoria) ? categoria : fanPage.categoria;
+      }
+      if (typeof publicacion !== 'undefined') {
+        fanPage.publicacion = Array.isArray(publicacion) ? publicacion : fanPage.publicacion;
+      }
 
       const updatedFanPage = await fanPage.save();
       res.status(200).json(updatedFanPage);
